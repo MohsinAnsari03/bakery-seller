@@ -1,17 +1,22 @@
+import dotenv from 'dotenv'
+dotenv.config()
+console.log('Mongo URI:', process.env.MONGO_URI)
+
 import path from 'path'
 import express from 'express'
-import dotenv from 'dotenv'
 import colors from 'colors'
 import morgan from 'morgan'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 import connectDB from './config/db.js'
 
+import configRoutes from './routes/configRoutes.js'
 import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
 import uploadRoutes from './routes/uploadRoutes.js'
+import paymentRoutes from './routes/paymentRoutes.js'
 
-dotenv.config()
+
 
 connectDB()
 
@@ -27,6 +32,9 @@ app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/orders', orderRoutes)
 app.use('/api/upload', uploadRoutes)
+app.use('/api/config', configRoutes)
+app.use('/api/payment', paymentRoutes)
+
 
 app.get('/api/config/paypal', (req, res) =>
   res.send(process.env.PAYPAL_CLIENT_ID)
