@@ -35,7 +35,7 @@ const OrderScreen = ({ match, history }) => {
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
-  if (!loading) {
+  if (!loading && order) {
     //   Calculate prices
     const addDecimals = (num) => {
       return (Math.round(num * 100) / 100).toFixed(2)
@@ -134,7 +134,7 @@ const OrderScreen = ({ match, history }) => {
 
             <ListGroup.Item>
               <h2>Order Items</h2>
-              {order.orderItems.length === 0 ? (
+              {order.orderItems && order.orderItems.length === 0 ? (
                 <Message>Order is empty</Message>
               ) : (
                 <ListGroup variant='flush'>
